@@ -37,14 +37,6 @@ jobs:
         run: |
           sed -i "s|image: .*$|image: ${{ vars.DOCKER_USERNAME }}/app:${{ env.VERSION }}|" compose.yaml && \
           docker compose up -d --build
-
-      - name: git push 
-        run: |
-          git config --global user.name ${{ vars.GUSERNAME }}
-          git config --global user.email ${{ vars.GEMAIL }}
-          git add compose.yaml
-          git commit -m "Update Docker image version to ${{ env.VERSION }}"
-          git push origin main
-
-
-          
+        
+      - name: Success message
+        run: echo "Docker image built, pushed, and compose updated successfully! 🎉🥂"
