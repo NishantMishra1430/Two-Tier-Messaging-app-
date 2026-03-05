@@ -15,7 +15,7 @@ services:
       MYSQL_ROOT_PASSWORD: "root"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "nishant", "-p1430"]
       interval: 10s
       timeout: 5s
       retries: 5
