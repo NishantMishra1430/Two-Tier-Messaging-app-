@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    networks:
+      - 2tier
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      # create the application database and user so the flask app can connect
+      MYSQL_DATABASE: "flask_db"     # matches app.py default
+      MYSQL_USER: "nishant"
+      MYSQL_PASSWORD: "1430"
+      MYSQL_ROOT_PASSWORD: "root"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  flask:
+    image: app:1.0.3
+    ports:
+      - "5000:5000"
+    networks:
+      - 2tier
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: nishant
+      MYSQL_PASSWORD: 1430
+      MYSQL_DB: flask_db
+    restart: always
+
+networks: 
+  2tier:  
+    driver: bridge
+volumes:  
+  mysql_data:
