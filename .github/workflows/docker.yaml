@@ -40,15 +40,11 @@ jobs:
 
       - name: git push 
         run: |
-          git config user.name: ${{ vars.GUSERNAME }} && \
-          git config user.email: ${{ vars.GEMAIL }} && \
-          git add compose.yaml && \
-          git commit -m "Update Docker image version to ${{ env.VERSION }}" && \
-          git push origin main 
-          }
-          
-      - name: Success Bell
-        run: echo "Deployment successful! 🎉"
+          git config --global user.name ${{ vars.GUSERNAME }}
+          git config --global user.email ${{ vars.GEMAIL }}
+          git add compose.yaml
+          git commit -m "Update Docker image version to ${{ env.VERSION }}"
+          git push origin main
 
 
           
