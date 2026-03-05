@@ -14,11 +14,6 @@ services:
       MYSQL_PASSWORD: "1430"
       MYSQL_ROOT_PASSWORD: "root"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "nishant", "-p1430"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
   flask:
     image: ${{ vars.DOCKER_USERNAME }}/app:${{ env.VERSION }}
     ports:
@@ -26,8 +21,7 @@ services:
     networks:
       - 2tier
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: nishant
