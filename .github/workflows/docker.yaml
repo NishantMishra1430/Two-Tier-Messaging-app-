@@ -36,7 +36,7 @@ jobs:
       - name: Update on Docker compose server
         run: |
           sed -i "s|image: .*$|image: app:v2026.03.05-a559e76|" compose.yaml && \
-          docker compose pull && \
+          docker compose down && \
           docker compose up -d --build
 
       - name: git push 
