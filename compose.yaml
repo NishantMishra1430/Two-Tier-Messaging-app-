@@ -20,7 +20,7 @@ services:
       timeout: 5s
       retries: 5
   flask:
-    image: app:1.0.3
+    image: ${{ vars.DOCKER_USERNAME }}/app:${{ env.VERSION }}
     ports:
       - "5000:5000"
     networks:
